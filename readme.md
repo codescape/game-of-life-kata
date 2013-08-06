@@ -1,4 +1,4 @@
 game-of-life-kata
 =================
 
-Starting projects for the Game of Life coding kata
+Starting project for the Game of Life coding kata using Groovy in conjunction with Gradle.
