@@ -1,0 +1,16 @@
+# IDEA
+.idea
+*.iml
+
+# Maven
+target
+
+# Node
+node_modules
+
+# OS X
+.DS_Store
+
+# Sublime
+*.sublime-project
+*.sublime-workspace
