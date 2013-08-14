@@ -1,36 +1,24 @@
 class GameOfLife {
 
+    static def deltas = [(-1..1), (-1..1)].combinations() - [[0, 0]]
+
     static def nextGeneration(def livingCells = []) {
-        def next = [] as Set
-        livingCells.each { cell ->
-            if (livingNeighbours(cell, livingCells) in [2, 3])
-                next << cell
-        }
-        allNeighbours(livingCells).findAll { !(it in livingCells) }.each { cell ->
-            if (livingNeighbours(cell, livingCells) == 3)
-                next << cell
-        }
-        next
+        livingCells.findAll { livingNeighbours(it, livingCells) in [2, 3] } +
+                deadNeighbours(livingCells).findAll { livingNeighbours(it, livingCells) == 3 } as Set
+    }
+
+    static def deadNeighbours(def livingCells) {
+        (allNeighbours(livingCells) - livingCells)
     }
 
     static def livingNeighbours(def cell, def livingCells) {
-        def count = 0
-        livingCells.each { candidate ->
-            if (candidate != cell && Math.abs(candidate[0] - cell[0]) <= 1 && Math.abs(candidate[1] - cell[1]) <= 1)
-                count++
-        }
-        count
+        livingCells.count { it in allNeighbours([cell]) }
     }
 
     static def allNeighbours(def cells) {
-        def neighbours = [] as Set
-        def deltas = [(-1..1), (-1..1)].combinations().findAll { it != [0, 0] }
-        cells.each { cell ->
-            deltas.each { delta ->
-                neighbours << [cell[0] + delta[0], cell[1] + delta[1]]
-            }
+        cells.inject([] as Set) { result, cell ->
+            deltas.collect { delta -> [cell[0] + delta[0], cell[1] + delta[1]] }
         }
-        neighbours
     }
 
 }

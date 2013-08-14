@@ -5,6 +5,7 @@ build/
 # intellij
 .idea/
 *.iml
+out/
 
 # eclipse
 .settings/
